@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import java.util.Vector;
 
@@ -16,9 +17,11 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
 	@BindView(R.id.rv_news)
 	RecyclerView rvNews;
+	@BindView(R.id.fl_loading)
+	FrameLayout flLoading;
 
 	static final String CHOSUN = "http://myhome.chosun.com/rss/www_section_rss.xml";
-	static final String JOINS = "http://rss.joins.com/joins_homenews_list.xml";
+	// static final String JOINS = "http://rss.joins.com/joins_homenews_list.xml";
 	static final String DONGA = "http://rss.donga.com/total.xml";
 
 	GetData getData;
@@ -44,11 +47,10 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	private void getNews(String url) {
-		getData = new GetData();
+		getData = new GetData(flLoading);
 		getData.execute(url, null, null);
 		while (true) {
 			try {
-				Thread.sleep(1000);
 				if (getData.flag) {
 					title = getData.titleVector;
 					content = getData.contentVector;

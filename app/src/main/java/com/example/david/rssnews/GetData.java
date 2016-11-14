@@ -1,13 +1,15 @@
 package com.example.david.rssnews;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Vector;
+import android.os.AsyncTask;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import android.os.AsyncTask;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Vector;
 
 class GetData extends AsyncTask<String, Void, Void> {
 	Vector<String> titleVector = new Vector<>();
@@ -16,6 +18,16 @@ class GetData extends AsyncTask<String, Void, Void> {
 	private String title = "";
 	private String desc = "";
 	Boolean flag = false;
+	private FrameLayout mLoading;
+
+	GetData(FrameLayout loading) {
+		this.mLoading = loading;
+	}
+
+	@Override
+	protected void onPreExecute() {
+		mLoading.setVisibility(View.VISIBLE);
+	}
 
 	@Override
 	protected Void doInBackground(String... strings) {
@@ -54,5 +66,11 @@ class GetData extends AsyncTask<String, Void, Void> {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	protected void onPostExecute(Void aVoid) {
+		super.onPostExecute(aVoid);
+		mLoading.setVisibility(View.GONE);
 	}
 }

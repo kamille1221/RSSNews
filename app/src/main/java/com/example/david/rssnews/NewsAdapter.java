@@ -53,7 +53,7 @@ class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 		return mTitle.size();
 	}
 
-	public void refresh(Vector<String> title, Vector<String> content) {
+	void refresh(Vector<String> title, Vector<String> content) {
 		this.mTitle = title;
 		this.mContent = content;
 		notifyDataSetChanged();

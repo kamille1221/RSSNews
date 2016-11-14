@@ -81,9 +81,11 @@ public class MainActivity extends AppCompatActivity {
 			case R.id.select_chosun:
 				getNews(CHOSUN);
 				return true;
+			/*
 			case R.id.select_joins:
 				getNews(JOINS);
 				return true;
+			*/
 			case R.id.select_donga:
 				getNews(DONGA);
 				return true;

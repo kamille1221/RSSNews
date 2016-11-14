@@ -7,9 +7,11 @@
 			android:id="@+id/select_chosun"
 			android:checked="true"
 			android:title="@string/chosun"/>
+		<!--
 		<item
 			android:id="@+id/select_joins"
 			android:title="@string/joins"/>
+		-->
 		<item
 			android:id="@+id/select_donga"
 			android:title="@string/donga"/>

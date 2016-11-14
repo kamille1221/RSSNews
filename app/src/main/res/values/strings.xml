@@ -1,0 +1,7 @@
+<resources>
+	<string name="app_name">RSS News</string>
+	<string name="close">닫기</string>
+	<string name="chosun">조선일보</string>
+	<string name="joins">중앙일보</string>
+	<string name="donga">동아일보</string>
+</resources>

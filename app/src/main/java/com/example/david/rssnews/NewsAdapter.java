@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 	public void onBindViewHolder(ViewHolder holder, int position) {
 		final int temp = position;
 		holder.tvTitle.setText(mTitle.get(position));
+		holder.tvTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, NewsPreferences.getFontSize());
 		holder.cvItem.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {

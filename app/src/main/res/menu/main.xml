@@ -16,4 +16,28 @@
 			android:id="@+id/select_donga"
 			android:title="@string/donga"/>
 	</group>
+	<item
+		android:id="@+id/menu_font"
+		android:title="@string/font_size">
+		<menu>
+			<group
+				android:checkableBehavior="single">
+				<item
+					android:id="@+id/font_12"
+					android:title="@string/font_12"/>
+				<item
+					android:id="@+id/font_16"
+					android:title="@string/font_16"/>
+				<item
+					android:id="@+id/font_20"
+					android:title="@string/font_20"/>
+				<item
+					android:id="@+id/font_24"
+					android:title="@string/font_24"/>
+				<item
+					android:id="@+id/font_28"
+					android:title="@string/font_28"/>
+			</group>
+		</menu>
+	</item>
 </menu>

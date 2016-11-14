@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.TypedValue;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -27,6 +28,7 @@ public class ContentActivity extends AppCompatActivity {
 		setTitle(intent.getStringExtra("title"));
 
 		tvContent.setText(htmlToString(intent.getStringExtra("content")));
+		tvContent.setTextSize(TypedValue.COMPLEX_UNIT_SP, NewsPreferences.getFontSize());
 	}
 
 	private Spanned htmlToString(String html) {

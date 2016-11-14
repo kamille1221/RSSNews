@@ -4,4 +4,10 @@
 	<string name="chosun">조선일보</string>
 	<string name="joins">중앙일보</string>
 	<string name="donga">동아일보</string>
+	<string name="font_size">글자 크기</string>
+	<string name="font_12">아주 작게</string>
+	<string name="font_16">작게</string>
+	<string name="font_20">중간</string>
+	<string name="font_24">크게</string>
+	<string name="font_28">아주 크게</string>
 </resources>

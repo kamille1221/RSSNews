@@ -22,11 +22,13 @@ class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 	private Context mContext;
 	private Vector<String> mTitle;
 	private Vector<String> mContent;
+	private Vector<String> mLink;
 
-	NewsAdapter(Context context, Vector<String> title, Vector<String> content) {
+	NewsAdapter(Context context, Vector<String> title, Vector<String> content, Vector<String> link) {
 		this.mContext = context;
 		this.mTitle = title;
 		this.mContent = content;
+		this.mLink = link;
 	}
 
 	@Override
@@ -45,6 +47,7 @@ class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 				Intent intent = new Intent(mContext, ContentActivity.class);
 				intent.putExtra("title", mTitle.get(temp));
 				intent.putExtra("content", mContent.get(temp));
+				intent.putExtra("link", mLink.get(temp));
 				mContext.startActivity(intent);
 			}
 		});
@@ -55,9 +58,10 @@ class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 		return mTitle.size();
 	}
 
-	void refresh(Vector<String> title, Vector<String> content) {
+	void refresh(Vector<String> title, Vector<String> content, Vector<String> link) {
 		this.mTitle = title;
 		this.mContent = content;
+		this.mLink = link;
 		notifyDataSetChanged();
 	}
 

@@ -7,6 +7,7 @@ class NewsPreferences {
 	private static final String PREFERENCE_NAME = "com.example.david.rssnews";
 	private static final String NEWS_URL = "newsURL";
 	private static final String FONT_SIZE = "fontSize";
+	private static final String SAVE_DATA = "saveData";
 
 	private static SharedPreferences sharedPreferences;
 
@@ -34,6 +35,16 @@ class NewsPreferences {
 	static void setFontSize(int fontSize) {
 		SharedPreferences.Editor editor = sharedPreferences.edit();
 		editor.putInt(FONT_SIZE, fontSize);
+		editor.apply();
+	}
+
+	static boolean getSaveData() {
+		return sharedPreferences.getBoolean(SAVE_DATA, true);
+	}
+
+	static void setSaveData(boolean saveData) {
+		SharedPreferences.Editor editor = sharedPreferences.edit();
+		editor.putBoolean(SAVE_DATA, saveData);
 		editor.apply();
 	}
 }

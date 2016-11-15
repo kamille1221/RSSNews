@@ -15,11 +15,20 @@
 
 		<TextView
 			android:id="@+id/tv_content"
-			android:layout_width="fill_parent"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:textColor="@color/textColorPrimary"
 			android:textSize="30sp"/>
 	</ScrollView>
+
+	<WebView
+		android:id="@+id/wv_content"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="48dp"
+		android:clipToPadding="false"
+		android:padding="16dp"
+		android:visibility="gone"/>
 
 	<Button
 		android:id="@+id/btn_close"

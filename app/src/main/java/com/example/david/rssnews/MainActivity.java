@@ -22,13 +22,12 @@ public class MainActivity extends AppCompatActivity {
 	FrameLayout flLoading;
 
 	static final String CHOSUN = "http://myhome.chosun.com/rss/www_section_rss.xml";
-	// 중앙일보는 내용이 너무 부실해서 그냥 제외..
-	// static final String JOINS = "http://rss.joins.com/joins_homenews_list.xml";
 	static final String DONGA = "http://rss.donga.com/total.xml";
 
 	GetData getData;
 	Vector<String> title;
 	Vector<String> content;
+	Vector<String> link;
 	NewsAdapter adapter;
 
 	@Override
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
 		getNews(NewsPreferences.getNewsURL());
 
-		adapter = new NewsAdapter(this, title, content);
+		adapter = new NewsAdapter(this, title, content, link);
 		rvNews.setAdapter(adapter);
 	}
 
@@ -61,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 				if (getData.flag) {
 					title = getData.titleVector;
 					content = getData.contentVector;
+					link = getData.linkVector;
 					break;
 				}
 			} catch (Exception e) {
@@ -68,13 +68,13 @@ public class MainActivity extends AppCompatActivity {
 			}
 		}
 		if (adapter != null) {
-			adapter.refresh(title, content);
+			adapter.refresh(title, content, link);
 		}
 	}
 
 	@OnClick(R.id.fab_top)
 	void onTopClick() {
-		adapter.refresh(title, content);
+		adapter.refresh(title, content, link);
 		rvNews.scrollToPosition(0);
 	}
 
@@ -85,10 +85,7 @@ public class MainActivity extends AppCompatActivity {
 		if (!TextUtils.isEmpty(url)) {
 			if (url.equals(CHOSUN)) {
 				menu.getItem(0).setChecked(true);
-//		    } else if (url.equals(JOINS)) {
-//				menu.getItem(1).setChecked(true);
 			} else if (url.equals(DONGA)) {
-//				menu.getItem(2).setChecked(true);
 				menu.getItem(1).setChecked(true);
 			}
 		}
@@ -109,6 +106,11 @@ public class MainActivity extends AppCompatActivity {
 				menu.getItem(2).getSubMenu().getItem(4).setChecked(true);
 				break;
 		}
+		if (NewsPreferences.getSaveData()) {
+			menu.getItem(3).setChecked(true);
+		} else {
+			menu.getItem(3).setChecked(false);
+		}
 		return true;
 	}
 
@@ -120,12 +122,6 @@ public class MainActivity extends AppCompatActivity {
 				getNews(CHOSUN);
 				NewsPreferences.setNewsURL(CHOSUN);
 				return true;
-			/*
-			case R.id.select_joins:
-				getNews(JOINS);
-				NewsPreferences.setNewsURL(JOINS);
-				return true;
-			*/
 			case R.id.select_donga:
 				getNews(DONGA);
 				NewsPreferences.setNewsURL(DONGA);
@@ -149,6 +145,10 @@ public class MainActivity extends AppCompatActivity {
 			case R.id.font_28:
 				getNews(NewsPreferences.getNewsURL());
 				NewsPreferences.setFontSize(28);
+				return true;
+			case R.id.save_data:
+				NewsPreferences.setSaveData(!NewsPreferences.getSaveData());
+				item.setChecked(NewsPreferences.getSaveData());
 				return true;
 		}
 		return super.onOptionsItemSelected(item);

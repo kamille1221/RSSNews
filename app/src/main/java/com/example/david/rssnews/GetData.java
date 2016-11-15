@@ -14,9 +14,12 @@ import java.util.Vector;
 class GetData extends AsyncTask<String, Void, Void> {
 	Vector<String> titleVector = new Vector<>();
 	Vector<String> contentVector = new Vector<>();
+	Vector<String> linkVector = new Vector<>();
 	private String tagName = "";
 	private String title = "";
-	private String desc = "";
+	private String content = "";
+	private String link = "";
+	private boolean[] flags = new boolean[]{true, true, true};
 	Boolean flag = false;
 	private FrameLayout mLoading;
 
@@ -45,18 +48,38 @@ class GetData extends AsyncTask<String, Void, Void> {
 				if (eventType == XmlPullParser.START_TAG) {
 					tagName = parser.getName();
 				} else if (eventType == XmlPullParser.TEXT) {
-					if (tagName.equals("title")) {
-						title += parser.getText();
-					} else if (tagName.equals("description")) {
-						desc += parser.getText();
+					switch (tagName) {
+						case "title":
+							if(flags[0]) {
+								flags[0] = false;
+								break;
+							}
+							title += parser.getText();
+							break;
+						case "link":
+							if(flags[1]) {
+								flags[1] = false;
+								break;
+							}
+							link += parser.getText();
+							break;
+						case "description":
+							if(flags[2]) {
+								flags[2] = false;
+								break;
+							}
+							content += parser.getText();
+							break;
 					}
 				} else if (eventType == XmlPullParser.END_TAG) {
 					tagName = parser.getName();
 					if (tagName.equals("item")) {
 						titleVector.add(title.trim());
-						contentVector.add(desc.trim());
+						contentVector.add(content.trim());
+						linkVector.add(link.trim());
 						title = "";
-						desc = "";
+						content = "";
+						link = "";
 					}
 				}
 				eventType = parser.next();

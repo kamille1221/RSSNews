@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.util.Vector;
 
 import butterknife.BindView;
@@ -21,14 +23,14 @@ public class MainActivity extends AppCompatActivity {
 	@BindView(R.id.fl_loading)
 	FrameLayout flLoading;
 
-	static final String CHOSUN = "http://myhome.chosun.com/rss/www_section_rss.xml";
-	static final String DONGA = "http://rss.donga.com/total.xml";
+	private static final String CHOSUN = "http://myhome.chosun.com/rss/www_section_rss.xml";
+	private static final String DONGA = "http://rss.donga.com/total.xml";
 
-	GetData getData;
-	Vector<String> title;
-	Vector<String> content;
-	Vector<String> link;
-	NewsAdapter adapter;
+	private Vector<String> title;
+	private Vector<String> content;
+	private Vector<String> link;
+	private NewsAdapter adapter;
+	private FirebaseAnalytics mFirebaseAnalytics;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +49,16 @@ public class MainActivity extends AppCompatActivity {
 
 		adapter = new NewsAdapter(this, title, content, link);
 		rvNews.setAdapter(adapter);
+
+		// Obtain the FirebaseAnalytics instance.
+		mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 	}
 
 	private void getNews(String url) {
 		if (TextUtils.isEmpty(url)) {
 			url = CHOSUN;
 		}
-		getData = new GetData(flLoading);
+		GetData getData = new GetData(flLoading);
 		getData.execute(url, null, null);
 		while (true) {
 			try {

@@ -61,15 +61,11 @@ public class MainActivity extends AppCompatActivity {
 		GetData getData = new GetData(flLoading);
 		getData.execute(url, null, null);
 		while (true) {
-			try {
-				if (getData.flag) {
-					title = getData.titleVector;
-					content = getData.contentVector;
-					link = getData.linkVector;
-					break;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
+			if (getData.flag) {
+				title = getData.titleVector;
+				content = getData.contentVector;
+				link = getData.linkVector;
+				break;
 			}
 		}
 		if (adapter != null) {

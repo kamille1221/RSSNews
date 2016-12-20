@@ -3,6 +3,7 @@ package com.example.david.rssnews;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.Spanned;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,16 +37,20 @@ public class ContentActivity extends AppCompatActivity {
 		ButterKnife.bind(this);
 
 		Intent intent = getIntent();
-
-		setTitle(intent.getStringExtra("title"));
-
-		tvContent.setText(htmlToString(intent.getStringExtra("content")));
+		ActionBar actionBar = getSupportActionBar();
+		if (intent != null) {
+			if (actionBar != null) {
+				actionBar.setTitle(intent.getStringExtra("title"));
+				actionBar.setDisplayHomeAsUpEnabled(true);
+			}
+			tvContent.setText(htmlToString(intent.getStringExtra("content")));
+			link = intent.getStringExtra("link");
+		} else {
+			Toast.makeText(ContentActivity.this, R.string.toast_intent_error, Toast.LENGTH_SHORT).show();
+			finish();
+		}
 		tvContent.setTextSize(TypedValue.COMPLEX_UNIT_SP, NewsPreferences.getFontSize());
-
 		wvContent.setWebViewClient(new WebViewClient());
-		link = intent.getStringExtra("link");
-		// WebSettings webSettings = wvContent.getSettings();
-		// webSettings.setJavaScriptEnabled(true);
 	}
 
 	private Spanned htmlToString(String html) {
@@ -60,7 +66,6 @@ public class ContentActivity extends AppCompatActivity {
 		finish();
 	}
 
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		if (!NewsPreferences.getSaveData()) {
@@ -72,13 +77,16 @@ public class ContentActivity extends AppCompatActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+			case android.R.id.home:
+				this.onBackPressed();
+				break;
 			case R.id.show_all:
 				if (!isWeb) {
 					if (!TextUtils.isEmpty(link)) {
 						tvContent.setVisibility(View.GONE);
 						wvContent.setVisibility(View.VISIBLE);
 						wvContent.loadUrl(link);
-						item.setTitle("기사 요약 보기");
+						item.setTitle(R.string.see_summary);
 						isWeb = true;
 					}
 				} else {

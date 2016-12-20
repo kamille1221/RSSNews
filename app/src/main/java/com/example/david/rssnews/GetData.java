@@ -4,10 +4,15 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.google.firebase.crash.FirebaseCrash;
+
 import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Vector;
 
@@ -50,21 +55,21 @@ class GetData extends AsyncTask<String, Void, Void> {
 				} else if (eventType == XmlPullParser.TEXT) {
 					switch (tagName) {
 						case "title":
-							if(flags[0]) {
+							if (flags[0]) {
 								flags[0] = false;
 								break;
 							}
 							title += parser.getText();
 							break;
 						case "link":
-							if(flags[1]) {
+							if (flags[1]) {
 								flags[1] = false;
 								break;
 							}
 							link += parser.getText();
 							break;
 						case "description":
-							if(flags[2]) {
+							if (flags[2]) {
 								flags[2] = false;
 								break;
 							}
@@ -85,7 +90,14 @@ class GetData extends AsyncTask<String, Void, Void> {
 				eventType = parser.next();
 			}
 			flag = true;
-		} catch (Exception e) {
+		} catch (XmlPullParserException e) {
+			FirebaseCrash.log("XmlPullParserException");
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			FirebaseCrash.log("MalformedURLException");
+			e.printStackTrace();
+		} catch (IOException e) {
+			FirebaseCrash.log("IOException");
 			e.printStackTrace();
 		}
 		return null;

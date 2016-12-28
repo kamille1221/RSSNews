@@ -7,11 +7,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.Spanned;
-import android.text.TextUtils;
 import android.util.TypedValue;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -27,7 +24,6 @@ public class ContentActivity extends AppCompatActivity {
 	@BindView(R.id.wv_content)
 	WebView wvContent;
 
-	boolean isWeb;
 	String link;
 
 	@Override
@@ -67,33 +63,10 @@ public class ContentActivity extends AppCompatActivity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		if (!NewsPreferences.getSaveData()) {
-			getMenuInflater().inflate(R.menu.content, menu);
-		}
-		return true;
-	}
-
-	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case android.R.id.home:
 				this.onBackPressed();
-				break;
-			case R.id.show_all:
-				if (!isWeb) {
-					if (!TextUtils.isEmpty(link)) {
-						tvContent.setVisibility(View.GONE);
-						wvContent.setVisibility(View.VISIBLE);
-						wvContent.loadUrl(link);
-						item.setTitle(R.string.see_summary);
-						isWeb = true;
-					}
-				} else {
-					tvContent.setVisibility(View.VISIBLE);
-					wvContent.setVisibility(View.GONE);
-					isWeb = false;
-				}
 				break;
 		}
 		return super.onOptionsItemSelected(item);

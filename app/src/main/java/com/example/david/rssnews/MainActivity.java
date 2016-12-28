@@ -107,11 +107,6 @@ public class MainActivity extends AppCompatActivity {
 				menu.getItem(2).getSubMenu().getItem(4).setChecked(true);
 				break;
 		}
-		if (NewsPreferences.getSaveData()) {
-			menu.getItem(3).setChecked(true);
-		} else {
-			menu.getItem(3).setChecked(false);
-		}
 		return true;
 	}
 
@@ -146,10 +141,6 @@ public class MainActivity extends AppCompatActivity {
 			case R.id.font_28:
 				getNews(NewsPreferences.getNewsURL());
 				NewsPreferences.setFontSize(28);
-				return true;
-			case R.id.save_data:
-				NewsPreferences.setSaveData(!NewsPreferences.getSaveData());
-				item.setChecked(NewsPreferences.getSaveData());
 				return true;
 		}
 		return super.onOptionsItemSelected(item);

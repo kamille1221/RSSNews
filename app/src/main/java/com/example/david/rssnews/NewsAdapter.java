@@ -41,15 +41,12 @@ class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 		final int temp = position;
 		holder.tvTitle.setText(mTitle.get(position));
 		holder.tvTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, NewsPreferences.getFontSize());
-		holder.cvItem.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Intent intent = new Intent(mContext, ContentActivity.class);
-				intent.putExtra("title", mTitle.get(temp));
-				intent.putExtra("content", mContent.get(temp));
-				intent.putExtra("link", mLink.get(temp));
-				mContext.startActivity(intent);
-			}
+		holder.cvItem.setOnClickListener(view -> {
+			Intent intent = new Intent(mContext, ContentActivity.class);
+			intent.putExtra("title", mTitle.get(temp));
+			intent.putExtra("content", mContent.get(temp));
+			intent.putExtra("link", mLink.get(temp));
+			mContext.startActivity(intent);
 		});
 	}
 
